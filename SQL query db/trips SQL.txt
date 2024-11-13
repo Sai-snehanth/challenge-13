@@ -1,0 +1,121 @@
+select * from fact_trips;
+
+SELECT *, 'Chandigarh' AS city_name FROM fact_trips WHERE city_id = 'CH01'
+UNION ALL
+SELECT *, 'Coimbatore' AS city_name FROM fact_trips WHERE city_id = 'TN01'
+UNION ALL
+SELECT *, 'Vishakapatinam' AS city_name FROM fact_trips WHERE city_id = 'AP01'
+UNION ALL
+SELECT *, 'Vadodara' AS city_name FROM fact_trips WHERE city_id = 'GJ02'
+UNION ALL
+SELECT *, 'Indore' AS city_name FROM fact_trips WHERE city_id = 'MP01'
+UNION ALL
+SELECT *, 'Kochi' AS city_name FROM fact_trips WHERE city_id = 'KL01'
+UNION ALL
+SELECT *, 'Surat' AS city_name FROM fact_trips WHERE city_id = 'CGJ01'
+UNION ALL
+SELECT *, 'Lucknow' AS city_name FROM fact_trips WHERE city_id = 'UP01'
+UNION ALL
+SELECT *, 'Jaipur' AS city_name FROM fact_trips WHERE city_id = 'RJ01'
+UNION ALL
+SELECT *, 'Mysore' AS city_name FROM fact_trips WHERE city_id = 'KA01';
+
+SELECT 
+    'Chandigarh' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'CH01'
+UNION ALL
+SELECT 
+    'Coimbatore' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'TN01'
+UNION ALL
+SELECT 
+    'Vishakapatinam' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'AP01'
+UNION ALL
+SELECT 
+    'Vadodara' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'GJ02'
+UNION ALL
+SELECT 
+    'Indore' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'MP01'
+UNION ALL
+SELECT 
+    'Kochi' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'KL01'
+UNION ALL
+SELECT 
+    'Surat' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'CGJ01'
+UNION ALL
+SELECT 
+    'Lucknow' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'UP01'
+UNION ALL
+SELECT 
+    'Jaipur' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'RJ01'
+UNION ALL
+SELECT 
+    'Mysore' AS city_name, AVG(fare_amount) AS avg_fare_amount 
+FROM fact_trips WHERE city_id = 'KA01';
+
+SELECT 
+    city_id,
+    SUM(CASE WHEN passenger_type = 'new' THEN 1 ELSE 0 END) AS new_passenger_trips,
+    SUM(CASE WHEN passenger_type = 'repeat' THEN 1 ELSE 0 END) AS repeat_passenger_trips,
+    SUM(CASE WHEN passenger_type = 'repeat' THEN 2 ELSE 0 END) AS total_repeat_trips
+FROM 
+    fact_trips
+GROUP BY 
+    city_id;
+
+
+SELECT 
+    CASE 
+        WHEN city_id = 'CH01' THEN 'Chandigarh'
+        WHEN city_id = 'TN01' THEN 'Coimbatore'
+        WHEN city_id = 'AP01' THEN 'Vishakapatinam'
+        WHEN city_id = 'GJ02' THEN 'Vadodara'
+        WHEN city_id = 'MP01' THEN 'Indore'
+        WHEN city_id = 'KL01' THEN 'Kochi'
+        WHEN city_id = 'CGJ01' THEN 'Surat'
+        WHEN city_id = 'UP01' THEN 'Lucknow'
+        WHEN city_id = 'RJ01' THEN 'Jaipur'
+        WHEN city_id = 'KA01' THEN 'Mysore'
+        ELSE 'Unknown'
+    END AS city_name,
+    city_id,
+    COUNT(*) AS new_passenger_trips
+FROM 
+    fact_trips
+WHERE 
+    passenger_type = 'new'
+GROUP BY 
+    city_id;
+
+SELECT 
+    CASE 
+        WHEN city_id = 'CH01' THEN 'Chandigarh'
+        WHEN city_id = 'TN01' THEN 'Coimbatore'
+        WHEN city_id = 'AP01' THEN 'Vishakapatinam'
+        WHEN city_id = 'GJ02' THEN 'Vadodara'
+        WHEN city_id = 'MP01' THEN 'Indore'
+        WHEN city_id = 'KL01' THEN 'Kochi'
+        WHEN city_id = 'CGJ01' THEN 'Surat'
+        WHEN city_id = 'UP01' THEN 'Lucknow'
+        WHEN city_id = 'RJ01' THEN 'Jaipur'
+        WHEN city_id = 'KA01' THEN 'Mysore'
+        ELSE 'Unknown'
+    END AS city_name,
+    city_id,
+    COUNT(*) AS new_passenger_trips
+FROM 
+    fact_trips
+WHERE 
+    passenger_type = 'new'
+GROUP BY 
+    city_id
+
+
+
